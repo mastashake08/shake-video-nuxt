@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    baseURL: '/shake-video-nuxt/', // baseURL: '/<repository>/'
+  },
   devtools: { enabled: true },
   modules: ['@invictus.codes/nuxt-vuetify', '@vite-pwa/nuxt'],
   pwa: {
