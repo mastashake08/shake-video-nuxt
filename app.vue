@@ -86,7 +86,7 @@
 
         <v-btn
           text="Close Dialog"
-          @click="showAbout = false"
+          v-on:click="showAbout = false"
         ></v-btn>
       </v-card-actions>
     </v-card>
