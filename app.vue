@@ -62,7 +62,7 @@
   </v-card>
   <v-dialog width="500" v-model="showAbout">
   
-  <template v-slot:default="{ isActive }">
+  <template>
     <v-card title="About SVP">
       <v-card-text>
         Shake Video Player is a Javascript PWA video player that offers functionality that most video players don't.
