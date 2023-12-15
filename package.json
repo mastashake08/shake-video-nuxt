@@ -13,6 +13,8 @@
     "@invictus.codes/nuxt-vuetify": "^0.3.0",
     "@nuxt/devtools": "latest",
     "@nuxtjs/color-mode": "^3.3.2",
+    "@vite-pwa/assets-generator": "^0.2.1",
+    "@vite-pwa/nuxt": "^0.3.5",
     "nuxt": "^3.8.2",
     "vue": "^3.3.10",
     "vue-router": "^4.2.5"
