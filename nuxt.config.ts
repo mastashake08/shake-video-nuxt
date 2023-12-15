@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     buildAssetsDir: 'assets', // don't use "_" at the begining of the folder name to avoids nojkill conflict
   },
   devtools: { enabled: true },
-  modules: ['@invictus.codes/nuxt-vuetify', '@vite-pwa/nuxt'],
+  modules: ['@invictus.codes/nuxt-vuetify', '@vite-pwa/nuxt', "@unlok-co/nuxt-stripe"],
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
@@ -63,5 +63,20 @@ export default defineNuxtConfig({
       navigateFallbackAllowlist: [/^\/$/],
       type: 'module',
     },
+  },
+  stripe: {
+    // Server
+    server: {
+      key: process.env.STRIPE_KEY,
+      
+    // CLIENT
+    },
+    client: {
+      key: process.env.STRIPE_SECRET,
+      // your api options override for stripe client side
+      options: {
+
+      }
+    }
   }
 })
