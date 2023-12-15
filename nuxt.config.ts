@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   app: {
     baseURL: '/shake-video-nuxt/', // baseURL: '/<repository>/'
+    buildAssetsDir: 'assets', // don't use "_" at the begining of the folder name to avoids nojkill conflict
   },
   devtools: { enabled: true },
   modules: ['@invictus.codes/nuxt-vuetify', '@vite-pwa/nuxt'],
