@@ -54,6 +54,7 @@
             <video controls class="video" :src="video" v-if="fileReady" />
             <p class="text-center">
               Welcome to Shake Video Player the internet's best internet player.
+              Play local and remote video files with the ability to manipulate them.
             </p>
             
           </v-container>
