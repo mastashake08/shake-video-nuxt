@@ -12,6 +12,16 @@ export default defineNuxtConfig({
       name: 'Shake Video Player',
       short_name: 'SVP',
       theme_color: '#000000',
+      "background_color": "black",
+
+      "display": "standalone",
+      "categories": ["entertainment", "movies"],
+      "display_override": ["fullscreen", "window-controls-overlay"],
+      "launch_handler": {
+        "client_mode": "focus-existing"
+    },
+    "description": "A PWA created with Nuxt 3 and Vue 3 that serves as compentent video player.",
+
       icons: [
         {
           src: 'video2.png',

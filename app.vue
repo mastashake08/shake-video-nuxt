@@ -11,7 +11,7 @@
       >
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-        <v-toolbar-title>Shake Video Player</v-toolbar-title>
+        <v-toolbar-title>SVP</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
