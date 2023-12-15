@@ -1,4 +1,6 @@
-# Nuxt 3 Minimal Starter
+# Shake Video Player
+A PWA created with Nuxt 3 and Vue 3 that serves as compentent video player. 
+The goal is to recreate most if not all of the functionality of [VLC player](https://github.com/videolan/vlc). This is a work in progress. 
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 

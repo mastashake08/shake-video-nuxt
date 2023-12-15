@@ -134,6 +134,10 @@
           value: 'open-network',
         },
         {
+          title: 'Capture Stream',
+          value: 'capture-stream'
+        },
+        {
           title: 'About',
           value: 'open-about',
         },
