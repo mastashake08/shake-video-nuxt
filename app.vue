@@ -52,7 +52,7 @@
       <v-main>
           <v-container fluid>
             <video controls class="video" :src="video" v-if="fileReady" />
-            <p>
+            <p class="text-center">
               Welcome to Shake Video Player the internet's best internet player.
             </p>
             
@@ -151,11 +151,11 @@
       this.showAbout = false;
     },
       async  handleFiles(files) {
-          for (const file of files) {
-              this.file = await file.getFile();
-
+          
+              this.file = await files[0].getFile();
+              this.fileReady = true
               this.video = URL.createObjectURL(this.file)
-          }
+          
       },
       async openLocal() {
         const options = {
@@ -206,5 +206,6 @@
 .video {
   border-radius: 2%;
   width: 100%;
+  box-shadow: 10px 5px 5px black;
 }
 </style>
