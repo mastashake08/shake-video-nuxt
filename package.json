@@ -10,9 +10,15 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@invictus.codes/nuxt-vuetify": "^0.3.0",
     "@nuxt/devtools": "latest",
+    "@nuxtjs/color-mode": "^3.3.2",
+    "@vite-pwa/nuxt": "^0.3.5",
     "nuxt": "^3.8.2",
     "vue": "^3.3.10",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "@mastashake08/shake-video-element": "^1.1.5"
   }
 }
