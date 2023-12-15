@@ -86,7 +86,7 @@
 
         <v-btn
           text="Close Dialog"
-          v-on:click="showAbout = false"
+          v-on:click="close"
         ></v-btn>
       </v-card-actions>
     </v-card>
@@ -147,6 +147,9 @@
       fileReady: false
     }),
     methods: {
+    close() {
+      this.showAbout = false;
+    },
       async  handleFiles(files) {
           for (const file of files) {
               this.file = await file.getFile();
