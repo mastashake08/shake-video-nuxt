@@ -15,11 +15,23 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn variant="text" icon="mdi-magnify"></v-btn>
+        <v-btn v-on:click="navigateTo('https://github.com/mastashake08/shake-video-nuxt', {  
+        open: {
+          target: '_blank'
+        }
+        })" variant="text" icon="mdi-github"></v-btn>
 
-        <v-btn variant="text" icon="mdi-filter"></v-btn>
+<v-btn v-on:click="navigateTo('https://x.com/jyroneparker', {  
+        open: {
+          target: '_blank'
+        }
+        })" variant="text" icon="mdi-twitter"></v-btn>
 
-        <v-btn variant="text" icon="mdi-dots-vertical"></v-btn>
+<v-btn v-on:click="navigateTo('https://youtube.com/c/jyroneparker', {  
+        open: {
+          target: '_blank'
+        }
+        })" variant="text" icon="mdi-youtube"></v-btn>
       </v-app-bar>
 
       <v-navigation-drawer
@@ -48,14 +60,70 @@
       </v-main>
     </v-layout>
   </v-card>
+  <v-dialog width="500" v-model="showAbout">
+  
+  <template v-slot:default="{ isActive }">
+    <v-card title="About SVP">
+      <v-card-text>
+        Shake Video Player is a Javascript PWA video player that offers functionality that most video players don't.
+        Created with the following technologies:
+        <v-list>
+          <v-list-item>
+            Nuxt 3
+          </v-list-item>
+          <v-list-item>
+            Vue 3
+          </v-list-item>
+          <v-list-item>
+            Vuetify
+          </v-list-item>
+        </v-list>
+        Developed by <a href="https://jyroneparker.com" target="_blank">Jyrone Parker (Mastashake)</a>. View the source code on <a href="https://github.com/mastashake08/shake-video-nuxt" target="_blank">Github</a>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+
+        <v-btn
+          text="Close Dialog"
+          @click="showAbout = false"
+        ></v-btn>
+      </v-card-actions>
+    </v-card>
+  </template>
+</v-dialog>
 </template>
 <script>
 
   export default {
+    mounted() {
+      if(process.client) {
+        if ('launchQueue' in window) {
+          console.log('File Handling API is supported!');
+
+          launchQueue.setConsumer(launchParams => {
+              this.handleFiles(launchParams.files);
+          });
+      } else {
+          console.error('File Handling API is not supported!');
+      }
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const action = urlParams.get('action');
+        if( action !== null) {
+          switch(action){
+            case 'remote':
+              this.openRemote();
+              break;
+          }
+        }
+      }
+    },
     data: () => ({
       defer: {},
       drawer: false,
       group: null,
+      showAbout: false,
       items: [
         {
           title: 'Open File',
@@ -67,7 +135,7 @@
         },
         {
           title: 'About',
-          value: 'about',
+          value: 'open-about',
         },
       ],
       video: '',
@@ -75,6 +143,13 @@
       fileReady: false
     }),
     methods: {
+      async  handleFiles(files) {
+          for (const file of files) {
+              this.file = await file.getFile();
+
+              this.video = URL.createObjectURL(this.file)
+          }
+      },
       async openLocal() {
         const options = {
           types: [
@@ -107,6 +182,8 @@
           case 'open-network':
             this.openRemote()
             break;
+          case 'open-about':
+            this.showAbout = true
         }
         this.drawer = false
       }

@@ -16,6 +16,23 @@ export default defineNuxtConfig({
           purpose: 'any maskable',
         },
       ],
+      "shortcuts": [
+        {
+          "name": "Open Remote Video",
+          "short_name": "Remote Video",
+          "description": "Open the player with a remote video",
+          "url": "/?action=remote",
+          "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+        }
+      ],
+      "file_handlers": [
+        {
+            "action": "/",
+            "accept": {
+                "video/*": [".avi", ".mov", ".webm", ".mp4"]
+            }
+        }
+    ]
     },
     workbox: {
       globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
