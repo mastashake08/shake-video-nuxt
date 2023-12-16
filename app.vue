@@ -150,10 +150,6 @@
           value: 'open-network',
         },
         {
-          title: 'Capture Stream',
-          value: 'capture-stream'
-        },
-        {
           title: 'About',
           value: 'open-about',
         },
@@ -325,14 +321,14 @@
     close() {
       this.showAbout = false;
     },
-      async  handleFiles(files) {
+    async  handleFiles(files) {
           
               this.file = await files[0].getFile();
               this.fileReady = true
               this.video = URL.createObjectURL(this.file)
           
       },
-      async openLocal() {
+    async openLocal() {
         const options = {
           types: [
             {
@@ -414,10 +410,13 @@ button:before {
 
 :picture-in-picture {
   box-shadow: 0 0 0 5px red;
-  border-radius: 2%;
+  transition: 3s ease-in-out;
 
 }
-
+video:buffering {
+  box-shadow: 3px 3px 5px red;
+  transition: 200ms linear;
+}
 video:has(video:picture-in-picture)::before {
   bottom: 36px;
   color: #ddd;
