@@ -50,11 +50,13 @@
       </v-navigation-drawer>
 
       <v-main>
-          <v-container fluid> 
-            <div class="player">
-              <video class="video" :src="video" v-show="fileReady" />
             
-              <div class="controls" v-show="fileReady">
+          <v-container fluid> 
+            <video ref="videoPlayer" class="video video-js"  :src="video" v-show="fileReady" controls />
+        
+            <div class="player">
+              
+              <!-- <div class="controls" v-show="fileReady">
                 <button class="play" data-icon="P" aria-label="play pause toggle"></button>
                 <button class="stop" data-icon="S" aria-label="stop"></button>
                 <div class="timer">
@@ -65,7 +67,7 @@
                 <button class="fwd" data-icon="F" aria-label="fast forward"></button>
                 <button class="fs" data-icon="M" aria-label="fullscreen"></button>
                 <button class="pip" data-icon="w" aria-label="pip"></button>
-              </div>
+              </div> -->
             </div>
             <div
               class="text-center mb-6 bg-surface-variant"
@@ -120,9 +122,22 @@
 </v-dialog>
 </template>
 <script>
-  import '~/assets/css/player.css'
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
   export default {
     data: () => ({
+      setup: {
+        width: '80%',
+        fluid: true,
+        liveui: true,
+        nativeControlsForTouch: true,
+        playbackRates: [0.5, 1, 1.5, 2],
+        responsive: true,
+        controls: true,
+        sources: [
+          
+        ]
+      },
       intervalFwd: null,
       intervalRwd: null,
       media: {},
@@ -155,6 +170,7 @@
         },
       ],
       video: '',
+      type: 'video/webm',
       file: null,
       fileReady: false
     }),
@@ -162,8 +178,12 @@
       this.handleLaunch();
     },
     mounted() {
-      this.setElements();
-      this.setListeners();
+      
+    },
+    beforeDestroy() {
+      if (this.media) {
+        this.media.dispose();
+      }
     },
     methods: {
       handleLaunch() {
@@ -201,18 +221,18 @@
       },
       setElements() {
         this.media = document.querySelector("video");
-        this.controls = document.querySelector(".controls");
-        this.play = document.querySelector(".play");
-        this.stop = document.querySelector(".stop");
-        this.rwd = document.querySelector(".rwd");
-        this.fwd = document.querySelector(".fwd");
-        this.pip = document.querySelector(".pip");
-        this.fs = document.querySelector(".fs");
-        this.timerWrapper = document.querySelector(".timer");
-        this.timer = document.querySelector(".timer span");
-        this.timerBar = document.querySelector(".timer div");
-        this.media.removeAttribute("controls");
-        this.controls.style.visibility = "visible";
+        // this.controls = document.querySelector(".controls");
+        // this.play = document.querySelector(".play");
+        // this.stop = document.querySelector(".stop");
+        // this.rwd = document.querySelector(".rwd");
+        // this.fwd = document.querySelector(".fwd");
+        // this.pip = document.querySelector(".pip");
+        // this.fs = document.querySelector(".fs");
+        // this.timerWrapper = document.querySelector(".timer");
+        // this.timer = document.querySelector(".timer span");
+        // this.timerBar = document.querySelector(".timer div");
+        // this.media.removeAttribute("controls");
+        // this.controls.style.visibility = "visible";
       },
       dragOverHandler(ev) {
         ev.preventDefault();
@@ -224,8 +244,19 @@
         
           // Use DataTransfer interface to access the file(s)
         this.file = ev.dataTransfer.files[0];
-        this.fileReady = true
+        console.log(this.file)
+        this.type = this.file.type
         this.video = URL.createObjectURL(this.file);
+        const source = {
+            src:this.video,
+            type: this.type
+          }
+          this.setup.sources.push(source)
+          this.setup.name = this.file.name
+          this.media = videojs(this.$refs.videoPlayer, this.setup, () => {
+            this.media.log('onPlayerReady', this);
+          });
+        this.fileReady = true
       },
       togglePip() {
         console.log('PIP')
@@ -380,5 +411,121 @@
     },
   }
 </script>
+<style>
+@font-face {
+  font-family: "HeydingsControlsRegular";
+  src: url("fonts/heydings_controls-webfont.eot");
+  src:
+    url("fonts/heydings_controls-webfont.eot?#iefix") format("embedded-opentype"),
+    url("fonts/heydings_controls-webfont.woff") format("woff"),
+    url("fonts/heydings_controls-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 
+button:before {
+  font-family: HeydingsControlsRegular;
+  font-size: 20px;
+  position: relative;
+  content: attr(data-icon);
+  color: #aaa;
+  text-shadow: 1px 1px 0px black;
+  margin-left:5px;
+}
 
+.video {
+  width: 80%;
+  height: 75%;
+  box-shadow: 10px 5px 5px black;
+  width: 75%;
+  border-radius: 10px;
+  margin-left: 200px;
+  background-color: black;
+  box-shadow: 3px 3px 5px black;
+  transition: 1s all;
+  display: flex;
+}
+
+:picture-in-picture {
+  box-shadow: 0 0 0 5px red;
+  transition: 3s ease-in-out;
+
+}
+video:buffering {
+  box-shadow: 3px 3px 5px red;
+  transition: 200ms linear;
+}
+video:has(video:picture-in-picture)::before {
+  bottom: 36px;
+  color: #ddd;
+  content: 'Video is now playing in a Picture-in-Picture window';
+  position: absolute;
+  right: 36px;
+}
+
+.controls {
+  visibility: hidden;
+  opacity: 0.1;
+  width: 73%;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  margin-left: -502px;
+  background-color: black;
+  box-shadow: 3px 3px 5px black;
+  transition: 1s all;
+  display: flex;
+}
+
+.player:hover .controls,
+.player:focus-within .controls {
+  opacity: 1;
+}
+.timer {
+  line-height: 38px;
+  font-size: 10px;
+  font-family: monospace;
+  text-shadow: 1px 1px 0px black;
+  color: white;
+  flex: 5;
+  position: relative;
+}
+
+.timer div {
+  position: absolute;
+  background-color: rgb(255 255 255 / 20%);
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 38px;
+  z-index: 2;
+}
+
+.timer span {
+  position: absolute;
+  z-index: 3;
+  left: 19px;
+}
+
+#drop_zone {
+  border: 5px solid blue;
+  width: 100%;
+  height: 100px;
+  position:sticky;
+}
+
+body {
+  background-color: #000;
+}
+
+.container {
+  opacity: 0.3;
+  background-color: aqua;
+}
+
+.player {
+  background-color: transparent;
+}
+
+</style>
