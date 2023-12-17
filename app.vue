@@ -121,7 +121,7 @@
 </v-dialog>
 </template>
 <script>
-
+import '~/assets/css/player.css'
   export default {
     data: () => ({
       setup: {
@@ -132,9 +132,9 @@
         playbackRates: [0.5, 1, 1.5, 2],
         responsive: true,
         controls: true,
-        autoplay: true,
+        autoplay: false,
         sources: [
-          
+          {}
         ],
         controlBar: {
           skipButtons: {
@@ -143,20 +143,7 @@
           }
         }
       },
-      intervalFwd: null,
-      intervalRwd: null,
-      media: {},
-      controls: {},
-      play: {},
-      stop: {},
-      rwd: {},
-      fwd: {},
-      pip: {},
-      fs: {},
-      timerWrapper: {},
-      timer: {},
-      timerBar: {},
-      defer: {},
+      media: {}, 
       drawer: false,
       group: null,
       showAbout: false,
@@ -175,7 +162,6 @@
         },
       ],
       video: '',
-      type: 'video/webm',
       file: null,
       fileReady: false
     }),
@@ -184,11 +170,6 @@
     },
     mounted() {
       
-    },
-    beforeDestroy() {
-      if (this.media) {
-        this.media.dispose();
-      }
     },
     methods: {
       handleLaunch() {
@@ -249,115 +230,16 @@
         
           // Use DataTransfer interface to access the file(s)
         this.file = ev.dataTransfer.files[0];
-        console.log(this.file)
         this.type = this.file.type
         this.video = URL.createObjectURL(this.file);
         const source = {
             src:this.video,
             type: this.type
           }
-          this.setup.sources.push(source)
+          this.setup.sources[0] = source
           this.setup.name = this.file.name
          
         this.fileReady = true
-      },
-      togglePip() {
-        console.log('PIP')
-        if(process.client) {
-          if (document.pictureInPictureElement) {
-          document.exitPictureInPicture();
-          } else if (document.pictureInPictureEnabled) {
-            this.media.requestPictureInPicture();
-            
-          }
-        }  
-      },
-      toggleFs() {
-        console.log('FS')
-        if(process.client) {
-          if (!document.fullscreenElement) {
-            this.media.requestFullscreen();
-          } else if (document.exitFullscreen) {
-            document.exitFullscreen();
-          }
-        } 
-      },
-      setTime() {
-        const minutes = Math.floor(this.media.currentTime / 60);
-        const seconds = Math.floor(this.media.currentTime - minutes * 60);
-
-        const minuteValue = minutes.toString().padStart(2, "0");
-        const secondValue = seconds.toString().padStart(2, "0");
-
-        const mediaTime = `${minuteValue}:${secondValue}`;
-        this.timer.textContent = mediaTime;
-
-        const barLength = this.timerWrapper.clientWidth * (this.media.currentTime / this.media.duration);
-        this.timerBar.style.width = `${barLength}px`;
-      },
-      windBackward() {
-        if (this.media.currentTime <= 3) {
-          this.rwd.classList.remove("active");
-          clearInterval(this.intervalRwd);
-          this.stopMedia();
-        } else {
-          this.media.currentTime -= 3;
-        }
-      },
-      windForward() {
-        if (this.media.currentTime >= this.media.duration - 3) {
-          this.fwd.classList.remove("active");
-          clearInterval(this.intervalFwd);
-          this.stopMedia();
-        } else {
-          this.media.currentTime += 3;
-        }
-      },
-      mediaBackward() {
-        clearInterval(this.intervalFwd);
-        this.fwd.classList.remove("active");
-
-        if (this.rwd.classList.contains("active")) {
-          this.rwd.classList.remove("active");
-          clearInterval(this.intervalRwd);
-          this.media.play();
-        } else {
-          this.rwd.classList.add("active");
-          this.media.pause();
-          this.intervalRwd = setInterval(this.windBackward, 200);
-        }
-      },
-      mediaForward() {
-        clearInterval(this.intervalRwd);
-        this.rwd.classList.remove("active");
-
-        if (this.fwd.classList.contains("active")) {
-          this.fwd.classList.remove("active");
-          clearInterval(this.intervalFwd);
-          this.media.play();
-        } else {
-          this.fwd.classList.add("active");
-          this.media.pause();
-          this.intervalFwd = setInterval(this.windForward, 200);
-        }
-      },
-      stopMedia() {
-        this.media.pause();
-        this.media.currentTime = 0;
-        this.play.setAttribute("data-icon", "P");
-        this.rwd.classList.remove("active");
-        this.fwd.classList.remove("active");
-        clearInterval(this.intervalRwd);
-        clearInterval(this.intervalFwd);
-      },
-      playPauseMedia() {
-      if (this.media.paused) {
-        this.play.setAttribute("data-icon", "u");
-        this.media.play();
-      } else {
-        this.play.setAttribute("data-icon", "P");
-        this.media.pause();
-      }
       },
       close() {
         this.showAbout = false;
@@ -385,7 +267,7 @@
 
         let [fileHandle] = await showOpenFilePicker(options);
         this.file = await fileHandle.getFile();
-        this.fileReady = true
+        
         this.type = this.file.type
         this.video = URL.createObjectURL(this.file);
         const source = {
@@ -394,9 +276,17 @@
           }
           this.setup.sources[0]= source
           this.setup.name = this.file.name
+          this.fileReady = true
+          console.log(this.setup)
       },
       openRemote() {
         this.video = prompt('Enter URL');
+        const source = {
+            src:this.video,
+            type: 'video/webm'
+          }
+          this.setup.sources[0]= source
+          this.setup.name = this.file.name
         this.fileReady = true
       },
       selectAction(e) {
@@ -422,101 +312,6 @@
   }
 </script>
 <style>
-@font-face {
-  font-family: "HeydingsControlsRegular";
-  src: url("fonts/heydings_controls-webfont.eot");
-  src:
-    url("fonts/heydings_controls-webfont.eot?#iefix") format("embedded-opentype"),
-    url("fonts/heydings_controls-webfont.woff") format("woff"),
-    url("fonts/heydings_controls-webfont.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-button:before {
-  font-family: HeydingsControlsRegular;
-  font-size: 20px;
-  position: relative;
-  content: attr(data-icon);
-  color: #aaa;
-  text-shadow: 1px 1px 0px black;
-  margin-left:5px;
-}
-
-.video {
-  width: 80%;
-  height: 75%;
-  box-shadow: 10px 5px 5px black;
-  width: 75%;
-  border-radius: 10px;
-  margin-left: 200px;
-  background-color: black;
-  box-shadow: 3px 3px 5px black;
-  transition: 1s all;
-  display: flex;
-}
-
-:picture-in-picture {
-  box-shadow: 0 0 0 5px red;
-  transition: 3s ease-in-out;
-
-}
-video:buffering {
-  box-shadow: 3px 3px 5px red;
-  transition: 200ms linear;
-}
-video:has(video:picture-in-picture)::before {
-  bottom: 36px;
-  color: #ddd;
-  content: 'Video is now playing in a Picture-in-Picture window';
-  position: absolute;
-  right: 36px;
-}
-
-.controls {
-  visibility: hidden;
-  opacity: 0.1;
-  width: 73%;
-  border-radius: 10px;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  margin-left: -502px;
-  background-color: black;
-  box-shadow: 3px 3px 5px black;
-  transition: 1s all;
-  display: flex;
-}
-
-.player:hover .controls,
-.player:focus-within .controls {
-  opacity: 1;
-}
-.timer {
-  line-height: 38px;
-  font-size: 10px;
-  font-family: monospace;
-  text-shadow: 1px 1px 0px black;
-  color: white;
-  flex: 5;
-  position: relative;
-}
-
-.timer div {
-  position: absolute;
-  background-color: rgb(255 255 255 / 20%);
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 38px;
-  z-index: 2;
-}
-
-.timer span {
-  position: absolute;
-  z-index: 3;
-  left: 19px;
-}
 
 #drop_zone {
   border: 5px solid blue;
