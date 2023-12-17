@@ -50,7 +50,7 @@
       </v-navigation-drawer>
 
       <v-main>
-          <v-container fluid>
+          <v-container fluid> 
             <div class="player">
               <video class="video" :src="video" v-show="fileReady" />
             
@@ -120,7 +120,7 @@
 </v-dialog>
 </template>
 <script>
-
+  import '~/assets/css/player.css'
   export default {
     data: () => ({
       intervalFwd: null,
@@ -158,55 +158,62 @@
       file: null,
       fileReady: false
     }),
+    created() {
+      this.handleLaunch();
+    },
     mounted() {
-      this.media = document.querySelector("video");
-      console.log(this.media);
-      this.controls = document.querySelector(".controls");
-
-      this.play = document.querySelector(".play");
-      this.stop = document.querySelector(".stop");
-      this.rwd = document.querySelector(".rwd");
-      this.fwd = document.querySelector(".fwd");
-      this.pip = document.querySelector(".pip");
-      this.fs = document.querySelector(".fs");
-      this.timerWrapper = document.querySelector(".timer");
-      this.timer = document.querySelector(".timer span");
-      this.timerBar = document.querySelector(".timer div");
-      this.media.removeAttribute("controls");
-      this.controls.style.visibility = "visible";
-      this.play.addEventListener("click", this.playPauseMedia);
-      this.stop.addEventListener("click", this.stopMedia);
-      this.media.addEventListener("ended", this.stopMedia);
-      this.rwd.addEventListener("click", this.mediaBackward);
-      this.fwd.addEventListener("click", this.mediaForward);
-      this.media.addEventListener("timeupdate", this.setTime);
-      this.pip.addEventListener("click", this.togglePip);
-      this.fs.addEventListener("click", this.toggleFs);
-
-
-      if(process.client) {
-        if ('launchQueue' in window) {
-          console.log('File Handling API is supported!');
-
-          launchQueue.setConsumer(launchParams => {
-              this.handleFiles(launchParams.files);
-          });
-      } else {
-          console.error('File Handling API is not supported!');
-      }
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const action = urlParams.get('action');
-        if( action !== null) {
-          switch(action){
-            case 'remote':
-              this.openRemote();
-              break;
-          }
-        }
-      }
+      this.setElements();
+      this.setListeners();
     },
     methods: {
+      handleLaunch() {
+        if(process.client) {
+          if ('launchQueue' in window) {
+            console.log('File Handling API is supported!');
+
+            launchQueue.setConsumer(launchParams => {
+                this.handleFiles(launchParams.files);
+            });
+        } else {
+            console.error('File Handling API is not supported!');
+        }
+          const queryString = window.location.search;
+          const urlParams = new URLSearchParams(queryString);
+          const action = urlParams.get('action');
+          if( action !== null) {
+            switch(action){
+              case 'remote':
+                this.openRemote();
+                break;
+            }
+          }
+        }
+      },
+      setListeners() {
+        this.play.addEventListener("click", this.playPauseMedia);
+        this.stop.addEventListener("click", this.stopMedia);
+        this.media.addEventListener("ended", this.stopMedia);
+        this.rwd.addEventListener("click", this.mediaBackward);
+        this.fwd.addEventListener("click", this.mediaForward);
+        this.media.addEventListener("timeupdate", this.setTime);
+        this.pip.addEventListener("click", this.togglePip);
+        this.fs.addEventListener("click", this.toggleFs);
+      },
+      setElements() {
+        this.media = document.querySelector("video");
+        this.controls = document.querySelector(".controls");
+        this.play = document.querySelector(".play");
+        this.stop = document.querySelector(".stop");
+        this.rwd = document.querySelector(".rwd");
+        this.fwd = document.querySelector(".fwd");
+        this.pip = document.querySelector(".pip");
+        this.fs = document.querySelector(".fs");
+        this.timerWrapper = document.querySelector(".timer");
+        this.timer = document.querySelector(".timer span");
+        this.timerBar = document.querySelector(".timer div");
+        this.media.removeAttribute("controls");
+        this.controls.style.visibility = "visible";
+      },
       dragOverHandler(ev) {
         ev.preventDefault();
       },
@@ -317,18 +324,18 @@
         this.play.setAttribute("data-icon", "P");
         this.media.pause();
       }
-    },
-    close() {
-      this.showAbout = false;
-    },
-    async  handleFiles(files) {
-          
-              this.file = await files[0].getFile();
-              this.fileReady = true
-              this.video = URL.createObjectURL(this.file)
-          
       },
-    async openLocal() {
+      close() {
+        this.showAbout = false;
+      },
+      async  handleFiles(files) {
+            
+                this.file = await files[0].getFile();
+                this.fileReady = true
+                this.video = URL.createObjectURL(this.file)
+            
+        },
+      async openLocal() {
         const options = {
           types: [
             {
@@ -373,109 +380,5 @@
     },
   }
 </script>
-<style>
-@font-face {
-  font-family: "HeydingsControlsRegular";
-  src: url("fonts/heydings_controls-webfont.eot");
-  src:
-    url("fonts/heydings_controls-webfont.eot?#iefix") format("embedded-opentype"),
-    url("fonts/heydings_controls-webfont.woff") format("woff"),
-    url("fonts/heydings_controls-webfont.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-button:before {
-  font-family: HeydingsControlsRegular;
-  font-size: 20px;
-  position: relative;
-  content: attr(data-icon);
-  color: #aaa;
-  text-shadow: 1px 1px 0px black;
-  margin-left:5px;
-}
-
-.video {
-  /* width: 80%;
-  height: 75%;
-  box-shadow: 10px 5px 5px black; */
-  width: 75%;
-  border-radius: 10px;
-  margin-left: 200px;
-  background-color: black;
-  box-shadow: 3px 3px 5px black;
-  transition: 1s all;
-  display: flex;
-}
-
-:picture-in-picture {
-  box-shadow: 0 0 0 5px red;
-  transition: 3s ease-in-out;
-
-}
-video:buffering {
-  box-shadow: 3px 3px 5px red;
-  transition: 200ms linear;
-}
-video:has(video:picture-in-picture)::before {
-  bottom: 36px;
-  color: #ddd;
-  content: 'Video is now playing in a Picture-in-Picture window';
-  position: absolute;
-  right: 36px;
-}
-
-.controls {
-  visibility: hidden;
-  opacity: 0.1;
-  width: 73%;
-  border-radius: 10px;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  margin-left: -502px;
-  background-color: black;
-  box-shadow: 3px 3px 5px black;
-  transition: 1s all;
-  display: flex;
-}
-
-.player:hover .controls,
-.player:focus-within .controls {
-  opacity: 1;
-}
-.timer {
-  line-height: 38px;
-  font-size: 10px;
-  font-family: monospace;
-  text-shadow: 1px 1px 0px black;
-  color: white;
-  flex: 5;
-  position: relative;
-}
-
-.timer div {
-  position: absolute;
-  background-color: rgb(255 255 255 / 20%);
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 38px;
-  z-index: 2;
-}
-
-.timer span {
-  position: absolute;
-  z-index: 3;
-  left: 19px;
-}
-
-#drop_zone {
-  border: 5px solid blue;
-  width: 100%;
-  height: 100px;
-  position:sticky;
-}
 
 
-</style>
