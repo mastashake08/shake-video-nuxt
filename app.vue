@@ -52,10 +52,9 @@
       <v-main>
             
           <v-container fluid> 
-            <video ref="videoPlayer" class="video video-js"  :src="video" v-show="fileReady" controls />
-        
+            
             <div class="player">
-              
+              <VideoPlayer :options="setup" v-if="fileReady"/>
               <!-- <div class="controls" v-show="fileReady">
                 <button class="play" data-icon="P" aria-label="play pause toggle"></button>
                 <button class="stop" data-icon="S" aria-label="stop"></button>
@@ -122,8 +121,7 @@
 </v-dialog>
 </template>
 <script>
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
+
   export default {
     data: () => ({
       setup: {
@@ -134,9 +132,16 @@ import 'video.js/dist/video-js.css';
         playbackRates: [0.5, 1, 1.5, 2],
         responsive: true,
         controls: true,
+        autoplay: true,
         sources: [
           
-        ]
+        ],
+        controlBar: {
+          skipButtons: {
+            backward: 10,
+            forward: 10
+          }
+        }
       },
       intervalFwd: null,
       intervalRwd: null,
@@ -253,9 +258,7 @@ import 'video.js/dist/video-js.css';
           }
           this.setup.sources.push(source)
           this.setup.name = this.file.name
-          this.media = videojs(this.$refs.videoPlayer, this.setup, () => {
-            this.media.log('onPlayerReady', this);
-          });
+         
         this.fileReady = true
       },
       togglePip() {
@@ -383,7 +386,14 @@ import 'video.js/dist/video-js.css';
         let [fileHandle] = await showOpenFilePicker(options);
         this.file = await fileHandle.getFile();
         this.fileReady = true
+        this.type = this.file.type
         this.video = URL.createObjectURL(this.file);
+        const source = {
+            src:this.video,
+            type: this.type
+          }
+          this.setup.sources[0]= source
+          this.setup.name = this.file.name
       },
       openRemote() {
         this.video = prompt('Enter URL');
