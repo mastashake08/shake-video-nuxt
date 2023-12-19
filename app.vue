@@ -274,7 +274,7 @@ import '~/assets/css/player.css'
             src:this.video,
             type: this.type
           }
-          this.setup.sources[0]= source
+          this.setup.sources.push(source)
           this.setup.name = this.file.name
           this.fileReady = true
           console.log(this.setup)
@@ -285,7 +285,7 @@ import '~/assets/css/player.css'
             src:this.video,
             type: 'video/webm'
           }
-          this.setup.sources[0]= source
+          this.setup.sources.push(source)
          // this.setup.name = this.file.name
         this.fileReady = true
       },
