@@ -286,7 +286,7 @@ import '~/assets/css/player.css'
             type: 'video/webm'
           }
           this.setup.sources[0]= source
-          this.setup.name = this.file.name
+         // this.setup.name = this.file.name
         this.fileReady = true
       },
       selectAction(e) {
