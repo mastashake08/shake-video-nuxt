@@ -1,6 +1,6 @@
 <template>
     <div>
-      <video ref="videoPlayer" class="video video-js"  preload="metadata"></video>
+      <video ref="videoPlayer" class="video video-js vjs-theme-forest"  preload="auto"></video>
       <div class="vjs-playlist"></div>
     </div>
   </template>
@@ -11,6 +11,8 @@ import * as playlist from 'videojs-playlist';
 import PlaylistMenu from 'videojs-playlist-ui'
 import 'video.js/dist/video-js.css';
 import 'videojs-playlist-ui/dist/videojs-playlist-ui.css'
+
+import '@videojs/themes/dist/forest/index.css';
   
   export default {
     name: 'VideoPlayer',
