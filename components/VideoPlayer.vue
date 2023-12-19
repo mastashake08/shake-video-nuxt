@@ -1,6 +1,6 @@
 <template>
     <div>
-      <video ref="videoPlayer" class="video video-js"></video>
+      <video ref="videoPlayer" class="video video-js"  preload="metadata"></video>
       <div class="vjs-playlist"></div>
     </div>
   </template>
@@ -36,7 +36,7 @@ import 'videojs-playlist-ui/dist/videojs-playlist-ui.css'
         sources: this.options.sources
       }])
       this.player.playlistUi();
-      this.player.playlist.autoadvance(0);
+      //this.player.playlist.autoadvance(0);
     },
     beforeDestroy() {
       if (this.player) {

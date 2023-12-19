@@ -279,14 +279,20 @@ import '~/assets/css/player.css'
           this.fileReady = true
           console.log(this.setup)
       },
-      openRemote() {
+      async openRemote() {
         this.video = prompt('Enter URL');
+        const res = await fetch(this.video)
+        const type = 'application/x-mpegURL'
+        const buf = await res.arrayBuffer()
+        const blob = new Blob([buf])
+        console.log(blob)
+        const src = URL.createObjectURL(blob)
         const source = {
-            src:this.video,
-            type: 'video/webm'
+            src:src,
+            type: type
           }
           this.setup.sources.push(source)
-         // this.setup.name = this.file.name
+         //this.setup.name = this.file.name
         this.fileReady = true
       },
       selectAction(e) {
