@@ -1,6 +1,10 @@
 <template>
     <div>
-      <video ref="videoPlayer" class="video video-js vjs-theme-forest"  preload="auto"></video>
+      <video ref="videoPlayer" class="video video-js vjs-default-skin vjs-controls-enabled vjs-has-started vjs-paused vjs-user-inactive"  preload="auto">
+        <source
+            src="https://iptv-org.github.io/iptv/index.m3u"
+            type="application/x-mpegURL">
+      </video>
       <div class="vjs-playlist"></div>
     </div>
   </template>
@@ -8,12 +12,12 @@
   <script>
 import videojs from 'video.js';
 import * as playlist from 'videojs-playlist';
-import PlaylistMenu from 'videojs-playlist-ui'
+import PlaylistMenu from 'videojs-playlist-ui';
 import 'video.js/dist/video-js.css';
 import 'videojs-playlist-ui/dist/videojs-playlist-ui.css'
 
-import '@videojs/themes/dist/forest/index.css';
-  
+import '@videojs/themes/dist/sea/index.css';
+
   export default {
     name: 'VideoPlayer',
     props: {
@@ -35,10 +39,14 @@ import '@videojs/themes/dist/forest/index.css';
         this.player.log('onPlayerReady', this);
       });
       this.player.playlist([{
-        sources: this.options.sources
+        sources: {
+            src: "https://iptv-org.github.io/iptv/index.m3u",
+            type: "application/x-mpegURL"
+        }
       }])
-      this.player.playlistUi();
+
       //this.player.playlist.autoadvance(0);
+      this.player.playlistUi();
     },
     beforeDestroy() {
       if (this.player) {

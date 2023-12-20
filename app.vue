@@ -55,18 +55,6 @@
             
             <div class="player">
               <VideoPlayer :options="setup" v-if="fileReady"/>
-              <!-- <div class="controls" v-show="fileReady">
-                <button class="play" data-icon="P" aria-label="play pause toggle"></button>
-                <button class="stop" data-icon="S" aria-label="stop"></button>
-                <div class="timer">
-                  <div></div>
-                  <span aria-label="timer">00:00</span>
-                </div>
-                <button class="rwd" data-icon="B" aria-label="rewind"></button>
-                <button class="fwd" data-icon="F" aria-label="fast forward"></button>
-                <button class="fs" data-icon="M" aria-label="fullscreen"></button>
-                <button class="pip" data-icon="w" aria-label="pip"></button>
-              </div> -->
             </div>
             <div
               class="text-center mb-6 bg-surface-variant"
@@ -127,20 +115,22 @@ import '~/assets/css/player.css'
       setup: {
         width: '80%',
         fluid: true,
-        liveui: true,
+        liveui: false,
         nativeControlsForTouch: true,
         playbackRates: [0.5, 1, 1.5, 2],
         responsive: true,
         controls: true,
-        autoplay: false,
+        autoplay: true,
         sources: [
-          {}
         ],
         controlBar: {
           skipButtons: {
             backward: 10,
             forward: 10
           }
+        },
+        plugins: { 
+          //airplayButton: {} 
         }
       },
       media: {}, 
@@ -163,7 +153,7 @@ import '~/assets/css/player.css'
       ],
       video: '',
       file: null,
-      fileReady: false
+      fileReady: true
     }),
     created() {
       this.handleLaunch();
@@ -229,15 +219,20 @@ import '~/assets/css/player.css'
 
         
           // Use DataTransfer interface to access the file(s)
-        this.file = ev.dataTransfer.files[0];
-        this.type = this.file.type
-        this.video = URL.createObjectURL(this.file);
-        const source = {
-            src:this.video,
-            type: this.type
+          const files = ev.dataTransfer.files
+          console.log(files)
+          for(const file of files) {
+            this.file = file;
+           this.type = this.file.type
+            this.video = URL.createObjectURL(this.file);
+            const source = {
+                src:this.video,
+                type: this.type
+              }
+              this.setup.sources.push(source)
           }
-          this.setup.sources[0] = source
-          this.setup.name = this.file.name
+        
+         
          
         this.fileReady = true
       },
@@ -282,7 +277,7 @@ import '~/assets/css/player.css'
       async openRemote() {
         this.video = prompt('Enter URL');
         const res = await fetch(this.video)
-        const type = 'application/x-mpegURL'
+        const type = await res.headers.get('content-type')
         const buf = await res.arrayBuffer()
         const blob = new Blob([buf])
         console.log(blob)
