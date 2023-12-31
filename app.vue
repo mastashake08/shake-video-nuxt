@@ -109,7 +109,6 @@
 </v-dialog>
 </template>
 <script>
-import '~/assets/css/player.css'
   export default {
     data: () => ({
       setup: {

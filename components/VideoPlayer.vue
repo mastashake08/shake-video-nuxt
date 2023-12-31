@@ -58,3 +58,22 @@ import '@silvermine/videojs-chromecast/dist/silvermine-videojs-chromecast.css'
     }
   }
   </script>
+  <style>
+   .video {  
+    border-radius: 10px;
+    background-color: transparent;
+    box-shadow: 3px 3px 5px black;
+    transition:  1s all ;
+    
+  }
+  
+  
+  
+  
+  .player:hover .controls,
+  .player:focus-within .controls {
+    opacity: 1;
+  }
+  
+  
+</style>
