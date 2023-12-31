@@ -120,7 +120,7 @@ import '~/assets/css/player.css'
         playbackRates: [0.5, 1, 1.5, 2],
         responsive: true,
         controls: true,
-        autoplay: true,
+        autoplay: false,
         sources: [
         ],
         controlBar: {
@@ -129,9 +129,14 @@ import '~/assets/css/player.css'
             forward: 10
           }
         },
-        plugins: { 
-          //airplayButton: {} 
-        }
+        techOrder: [ 'chromecast', 'html5'], // You may have more Tech, such as Flash or HLS
+          plugins: {
+              chromecast: {
+                receiverAppID: 'CB7148F4',
+                addButtonToControlBar: true,
+                addCastLabelToButton: true
+              }
+          }
       },
       media: {}, 
       drawer: false,
@@ -153,7 +158,7 @@ import '~/assets/css/player.css'
       ],
       video: '',
       file: null,
-      fileReady: true
+      fileReady: false
     }),
     created() {
       this.handleLaunch();

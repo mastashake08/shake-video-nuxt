@@ -1,9 +1,6 @@
 <template>
     <div>
       <video ref="videoPlayer" class="video video-js vjs-default-skin vjs-controls-enabled vjs-has-started vjs-paused vjs-user-inactive"  preload="auto">
-        <source
-            src="https://iptv-org.github.io/iptv/index.m3u"
-            type="application/x-mpegURL">
       </video>
       <div class="vjs-playlist"></div>
     </div>
@@ -15,9 +12,9 @@ import * as playlist from 'videojs-playlist';
 import PlaylistMenu from 'videojs-playlist-ui';
 import 'video.js/dist/video-js.css';
 import 'videojs-playlist-ui/dist/videojs-playlist-ui.css'
-
+import * as registerChromeCast from '@silvermine/videojs-chromecast'
 import '@videojs/themes/dist/sea/index.css';
-
+import '@silvermine/videojs-chromecast/dist/silvermine-videojs-chromecast.css'
   export default {
     name: 'VideoPlayer',
     props: {
@@ -33,20 +30,26 @@ import '@videojs/themes/dist/sea/index.css';
         player: null
       }
     },
+    created() {
+      
+    },
     mounted() {
-    
+      registerChromeCast(videojs, { preloadWebComponents: true });
       this.player = videojs(this.$refs.videoPlayer, this.options, () => {
         this.player.log('onPlayerReady', this);
       });
       this.player.playlist([{
-        sources: {
-            src: "https://iptv-org.github.io/iptv/index.m3u",
-            type: "application/x-mpegURL"
-        }
+        sources: this.options.sources
       }])
 
-      //this.player.playlist.autoadvance(0);
-      this.player.playlistUi();
+      // //this.player.playlist.autoadvance(0);
+      //this.player.playlistUi();
+      //this.player.chromecast();
+      // this.player.src({
+      //       src: "https://adultswim-vodlive.cdn.turner.com/live/aqua-teen/stream.m3u8",
+      //       type: "application/x-mpegURL"
+      //   })
+      //this.player.play()
     },
     beforeDestroy() {
       if (this.player) {
