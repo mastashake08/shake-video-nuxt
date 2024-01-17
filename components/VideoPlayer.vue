@@ -37,9 +37,6 @@ import { StoreFrames } from '@mastashake08/remote-video-recorder';
       this.player = videojs(this.$refs.videoPlayer, this.options, () => {
         this.player.log('onPlayerReady', this);
       });
-      this.player.playlist([{
-        sources: this.options.sources
-      }])
 
       
       //this.player.play()

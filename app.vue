@@ -109,6 +109,7 @@
 </v-dialog>
 </template>
 <script>
+import JsWebm from 'jswebm';
   export default {
     data: () => ({
       setup: {
@@ -252,6 +253,7 @@
 
         let [fileHandle] = await showOpenFilePicker(options);
         this.file = await fileHandle.getFile();
+      
         
         this.type = this.file.type
         this.video = URL.createObjectURL(this.file);
@@ -259,7 +261,7 @@
             src:this.video,
             type: this.type
           }
-          this.setup.sources.push(source)
+          this.setup.sources[0] = source
           this.setup.name = this.file.name
           this.fileReady = true
           console.log(this.setup)
@@ -274,7 +276,7 @@
             src:this.video,
             type: this.type
           }
-          this.setup.sources.push(source)
+          this.setup.sources[0] = source
           this.setup.name = this.file.name
           this.fileReady = true
           console.log(this.setup)
@@ -284,14 +286,14 @@
         const res = await fetch(this.video)
         const type = await res.headers.get('content-type')
         const buf = await res.arrayBuffer()
-        const blob = new Blob([buf])
+        const blob = new Blob([buf], {type: type})
         console.log(blob)
         const src = URL.createObjectURL(blob)
         const source = {
             src:src,
             type: type
           }
-          this.setup.sources.push(source)
+          this.setup.sources[0] = source
          //this.setup.name = this.file.name
         this.fileReady = true
       },
