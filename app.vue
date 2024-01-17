@@ -128,14 +128,8 @@
             forward: 10
           }
         },
-        techOrder: [ 'chromecast', 'html5'], // You may have more Tech, such as Flash or HLS
-          plugins: {
-              chromecast: {
-                receiverAppID: 'CB7148F4',
-                addButtonToControlBar: true,
-                addCastLabelToButton: true
-              }
-          }
+        techOrder: ['html5'], // You may have more Tech, such as Flash or HLS
+          
       },
       media: {}, 
       drawer: false,
