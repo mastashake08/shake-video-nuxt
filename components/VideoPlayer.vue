@@ -12,7 +12,6 @@ import * as playlist from 'videojs-playlist';
 import PlaylistMenu from 'videojs-playlist-ui';
 import 'video.js/dist/video-js.css';
 import 'videojs-playlist-ui/dist/videojs-playlist-ui.css'
-import * as registerChromeCast from '@silvermine/videojs-chromecast'
 import '@videojs/themes/dist/sea/index.css';
 import '@silvermine/videojs-chromecast/dist/silvermine-videojs-chromecast.css'
 import { StoreFrames } from '@mastashake08/remote-video-recorder';
@@ -35,7 +34,6 @@ import { StoreFrames } from '@mastashake08/remote-video-recorder';
       
     },
     async mounted() {
-      registerChromeCast(videojs, { preloadWebComponents: true });
       this.player = videojs(this.$refs.videoPlayer, this.options, () => {
         this.player.log('onPlayerReady', this);
       });
