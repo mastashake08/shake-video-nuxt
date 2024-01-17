@@ -170,23 +170,34 @@
         if(process.client) {
           if ('launchQueue' in window) {
             console.log('File Handling API is supported!');
-
             launchQueue.setConsumer(launchParams => {
-                this.handleFiles(launchParams.files);
+              console.log(launchParams)
+              if(launchParams.files.length > 0) {
+                this.openLocal(launchParams.files[0]);
+              } else if(launchParams.targetURL !== '') {
+                
+                const urlParams = new URLSearchParams(launchParams.targetURL);
+                for(const [key,value] of urlParams.entries()) {
+                  const action = value;
+                  console.log(action)
+                  if( action !== null) {
+                    switch(action){
+                      case 'remote':
+                        try {
+                          this.openRemote();
+                        } catch {
+                          alert('There has been an error playing the resource.')
+                        }
+                        break;
+                    }
+                  }
+                }
+              }
             });
         } else {
             console.error('File Handling API is not supported!');
         }
-          const queryString = window.location.search;
-          const urlParams = new URLSearchParams(queryString);
-          const action = urlParams.get('action');
-          if( action !== null) {
-            switch(action){
-              case 'remote':
-                this.openRemote();
-                break;
-            }
-          }
+          
         }
       },
       setListeners() {
@@ -201,18 +212,6 @@
       },
       setElements() {
         this.media = document.querySelector("video");
-        // this.controls = document.querySelector(".controls");
-        // this.play = document.querySelector(".play");
-        // this.stop = document.querySelector(".stop");
-        // this.rwd = document.querySelector(".rwd");
-        // this.fwd = document.querySelector(".fwd");
-        // this.pip = document.querySelector(".pip");
-        // this.fs = document.querySelector(".fs");
-        // this.timerWrapper = document.querySelector(".timer");
-        // this.timer = document.querySelector(".timer span");
-        // this.timerBar = document.querySelector(".timer div");
-        // this.media.removeAttribute("controls");
-        // this.controls.style.visibility = "visible";
       },
       dragOverHandler(ev) {
         ev.preventDefault();
@@ -243,13 +242,6 @@
       close() {
         this.showAbout = false;
       },
-      async  handleFiles(files) {
-            
-                this.file = await files[0].getFile();
-                this.fileReady = true
-                this.video = URL.createObjectURL(this.file)
-            
-        },
       async openLocal() {
         const options = {
           types: [
@@ -266,6 +258,21 @@
 
         let [fileHandle] = await showOpenFilePicker(options);
         this.file = await fileHandle.getFile();
+        
+        this.type = this.file.type
+        this.video = URL.createObjectURL(this.file);
+        const source = {
+            src:this.video,
+            type: this.type
+          }
+          this.setup.sources.push(source)
+          this.setup.name = this.file.name
+          this.fileReady = true
+          console.log(this.setup)
+      },
+      async openLocal(file) {
+       
+        this.file = await file.getFile();
         
         this.type = this.file.type
         this.video = URL.createObjectURL(this.file);
