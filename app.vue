@@ -173,7 +173,7 @@
             launchQueue.setConsumer(launchParams => {
               console.log(launchParams)
               if(launchParams.files.length > 0) {
-                this.openLocal(launchParams.files[0]);
+                this.openLocalFile(launchParams.files[0]);
               } else if(launchParams.targetURL !== '') {
                 
                 const urlParams = new URLSearchParams(launchParams.targetURL);
@@ -270,7 +270,7 @@
           this.fileReady = true
           console.log(this.setup)
       },
-      async openLocal(file) {
+      async openLocalFile(file) {
        
         this.file = await file.getFile();
         
