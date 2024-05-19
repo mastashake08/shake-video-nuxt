@@ -120,8 +120,6 @@
         responsive: true,
         controls: true,
         autoplay: false,
-        sources: [
-        ],
         controlBar: {
           skipButtons: {
             backward: 10,
@@ -151,7 +149,7 @@
       ],
       video: '',
       file: null,
-      fileReady: false
+      fileReady: true
     }),
     created() {
       this.handleLaunch();
@@ -262,7 +260,6 @@
           this.setup.sources.push(source)
           this.setup.name = this.file.name
           this.fileReady = true
-          console.log(this.setup)
       },
       async openLocalFile(file) {
        
@@ -285,14 +282,13 @@
         const type = await res.headers.get('content-type')
         const buf = await res.arrayBuffer()
         const blob = new Blob([buf])
-        console.log(blob)
+     
         const src = URL.createObjectURL(blob)
         const source = {
-            src:src,
+            src:this.video,
             type: type
           }
           this.setup.sources.push(source)
-         //this.setup.name = this.file.name
         this.fileReady = true
       },
       selectAction(e) {

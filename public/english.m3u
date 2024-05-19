@@ -1,0 +1,73 @@
+#EXTM3U
+#EXTINF:0,30A TV
+https://30a-tv.com/my999.m3u8
+#EXTINF:0,30A TV MUSIC
+https://30a-tv.com/music.m3u8
+#EXTINF:0,Al Jazeera Live
+https://live-hls-web-aje.getaj.net/AJE/index.m3u8
+#EXTINF:0,Angel TV America
+https://cdn3.wowza.com/5/TDJ0aWNkNXFxWWta/angeltvcloud/ngrp:angelamerica_all/chunklist_b1431072.m3u8
+#EXTINF:0,AYV
+https://1219373429.rsc.cdn77.org/live/stream-1/chunklist.m3u8
+#EXTINF:0,barazatv hd
+https://eco.streams.ovh:443/BarazaTV/BarazaTV/playlist.m3u8
+#EXTINF:0,bbc.com/news/world
+http://103.199.161.254/Content/bbcworld/Live/Channel(BBCworld)/Stream(01)/index.m3u8
+#EXTINF:0,BritAsia TV
+https://dai.ly/x6s18p8
+#EXTINF:0,CBN NEWS
+https://bcovlive-a.akamaihd.net/re8d9f611ee4a490a9bb59e52db91414d/us-east-1/734546207001/playlist.m3u8
+#EXTINF:0,cna tv
+https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index.m3u8
+#EXTINF:0,DW-TV English
+https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8
+#EXTINF:0,EbS Live (Europe by Satellite)
+https://euc-live.fl.freecaster.net/live/eucom/ebs-audio_int=96000-video=2600000.m3u8
+#EXTINF:0,EbS+ Live (Europe by Satellite)
+https://euc-live.fl.freecaster.net/live/eucom/ebsp-audio_int=96000-video=2600000.m3u8
+#EXTINF:0,EDGEsport.uk
+https://edgesports-sportstribal.amagi.tv/playlist.m3u8
+#EXTINF:0,edition.cnn
+https://cnn-cnninternational-1-eu.rakuten.wurl.tv/206849c7acd1570962df1ad525fa8688.m3u8
+#EXTINF:0,Fashion TV
+http://fash1043.cloudycdn.services/slive/_definst_/ftv_paris_adaptive.smil/chunklist.m3u8
+#EXTINF:0,gospel TV
+http://live-h1.frontlayer.net/fl492017/live/chunks.m3u8
+#EXTINF:0,Hunt Channel
+https://1111296894.rsc.cdn77.org/LS-ATL-56868-1/index.m3u8
+#EXTINF:0,KidoodleTV.ca
+https://kidoodletv-kdtv-1-ca.samsung.wurl.tv/playlist.m3u8
+#EXTINF:0,LegoChannel.us
+https://legochannel-vizio.amagi.tv/playlist.m3u8
+#EXTINF:0,Leo jose
+https://list.iptvcat.com/my_list/s/f941a1259615aa91505e37fe249fea5c.m3u8
+#EXTINF:0,LiveNOWfromFOX.us
+https://fox-foxnewsnow-vizio.amagi.tv/playlist.m3u8
+#EXTINF:0,MAVTV.us
+https://mavtv-1.sinclair.wurl.com/manifest/playlist.m3u8
+#EXTINF:0,MAVTVSelect.us
+https://mavtv-mavtvglobal-1-eu.rakuten.wurl.tv/playlist.m3u8
+#EXTINF:0,NBC News
+https://nbcnews2.akamaized.net/hls/live/723426/NBCNewsPlaymaker24x7Linear99a3a827-ua/master.m3u8
+#EXTINF:0,NRB Network [USA]
+https://uni10rtmp.tulix.tv/nrbtvlive/nrbtvlive.stream/playlist.m3u8
+#EXTINF:0,OneNewsNetwork.us
+http://oneamericanews-roku-us.amagi.tv/playlist.m3u8
+#EXTINF:0,OutsideTVPlus.us
+https://outsidetvplus-xumo.amagi.tv/playlist.m3u8
+#EXTINF:0,qvc beauty uk
+https://live-qvcuk.simplestreamcdn.com/live/qvcuk_main_clean/bitrate1.isml/live.m3u8
+#EXTINF:0,skitv.tv
+https://d2xeo83q8fcni6.cloudfront.net/v1/master/9d062541f2ff39b5c0f48b743c6411d25f62fc25/SkiTV-SynapseTV/193.m3u8
+#EXTINF:0,SportyStuffTV.uk
+https://ayozat-live.secure2.footprint.net/egress/bhandler/ayozat/sportystufftv/playlist.m3u8
+#EXTINF:0,Trace Urban tv
+https://lightning-traceurban-samsungau.amagi.tv/playlist.m3u8
+#EXTINF:0,uctv
+https://59e8e1c60a2b2.streamlock.net/509/509.stream/playlist.m3u8
+#EXTINF:0,V2Beat
+https://abr.de1se01.v2beat.live/playlist.m3u8
+#EXTINF:0,Weatherspy TV
+https://jukin-weatherspy-1.samsung.wurl.com/manifest/playlist.m3u8
+#EXTINF:0,Wonder
+https://wonder-samsung-uk.amagi.tv/playlist.m3u8
