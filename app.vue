@@ -121,6 +121,8 @@
         responsive: true,
         controls: true,
         autoplay: true,
+        name: 'Shake Video Player',
+        thumbnail: '/logo.svg',
         enableSmoothSeeking: true,
         sources:[],
         controlBar: {
