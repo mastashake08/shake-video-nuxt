@@ -59,7 +59,7 @@ import { StoreFrames } from '@mastashake08/remote-video-recorder';
           
         }
        
-        this.player.playlist([this.options.sources])
+        this.player.playlist(this.options.sources)
         this.player.playlistUi()
       });
       
