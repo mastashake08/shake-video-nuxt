@@ -58,31 +58,7 @@ import { StoreFrames } from '@mastashake08/remote-video-recorder';
         } catch (error) {
           
         }
-        // this.player.playlist([
-        //   {
-        //   name: 'Rick and Morty',
-         
-        //   poster:'https://media.cdn.adultswim.com/uploads/20230927/239271334177-rick-and-morty-season-7-metaThumb_420x236.png',
-        //   thumbnail: [{
-        //     src: 'https://media.cdn.adultswim.com/uploads/20230927/239271334177-rick-and-morty-season-7-metaThumb_420x236.png'
-        //   }],
-        //   sources: [{
-        //     src: 'https://adultswim-vodlive.cdn.turner.com/live/rick-and-morty/stream.m3u8',
-        //     type:'application/x-mpegURL'
-        //     }]
-        //   },
-        //   {
-        //     name: 'Adult Swim Aqua Teen Hunger Force',
-        //     poster: 'https://i.cdn.turner.com/adultswim/big/video/aqua-teen-hunger-force-marathon/marathonStream_athf10.jpg',
-        //     thumbnail: [{
-        //       src: 'https://i.cdn.turner.com/adultswim/big/video/aqua-teen-hunger-force-marathon/marathonStream_athf10.jpg'
-        //     }],
-        //     sources: [{
-        //         src:'https://adultswim-vodlive.cdn.turner.com/live/aqua-teen/stream.m3u8',
-        //         type:'application/x-mpegURL'
-        //       }]
-        //   }
-        // ])
+       
         this.player.playlist([this.options.sources])
         this.player.playlistUi()
       });

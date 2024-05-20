@@ -166,9 +166,8 @@
       handleLaunch() {
         if(process.client) {
           if ('launchQueue' in window) {
-            console.log('File Handling API is supported!');
             launchQueue.setConsumer(launchParams => {
-              console.log(launchParams)
+              
               if(launchParams.files.length > 0) {
                 this.openLocalFile(launchParams.files[0]);
               } else if(launchParams.targetURL !== '') {
@@ -176,7 +175,7 @@
                 const urlParams = new URLSearchParams(launchParams.targetURL);
                 for(const [key,value] of urlParams.entries()) {
                   const action = value;
-                  console.log(action)
+               
                   if( action !== null) {
                     switch(action){
                       case 'remote':
@@ -220,7 +219,7 @@
         
           // Use DataTransfer interface to access the file(s)
           const files = ev.dataTransfer.files
-          console.log(files)
+      
           for(const file of files) {
             this.file = file;
            this.type = this.file.type
@@ -279,7 +278,6 @@
           this.setup.sources.push(source)
           this.setup.name = this.file.name
           this.fileReady = true
-          console.log(this.setup)
       },
       async openRemote() {
         this.video = await prompt('Enter URL');
@@ -293,7 +291,7 @@
         this.fileReady = true
       },
       selectAction(e) {
-        console.log(e)
+     
         switch(e.value) {
           case 'open-local':
             this.openLocal()
