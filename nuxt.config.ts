@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'https://backend-shaketv.jcompsolu.com/api/',
+                target: 'https://shaketv.jcompsolu.com/api/',
                 changeOrigin: true
             }
         }

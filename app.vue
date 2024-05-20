@@ -122,19 +122,7 @@
         controls: true,
         autoplay: true,
         enableSmoothSeeking: true,
-        sources:[
-          // {
-          //   src: 'https://adultswim-vodlive.cdn.turner.com/live/rick-and-morty/stream.m3u8',
-          //   type:'application/x-mpegURL'
-          // },
-          // {
-          //     src:' https://adultswim-vodlive.cdn.turner.com/live/aqua-teen/stream.m3u8',
-          //     type:'application/x-mpegURL'
-          //   },{
-          //   src: 'https://bloodydisgusting-ingest-roku-us.cinedigm.com/playlist.m3u8',
-          //   type: 'application/x-mpegURL'
-          // }
-        ],
+        sources:[],
         controlBar: {
           skipButtons: {
             backward: 10,
@@ -255,7 +243,7 @@
             {
               description: "Videos",
               accept: {
-                "video/*": [".avi", ".mov", ".webm", ".mp4"],
+                "video/*": [".avi", ".mov", ".webm", ".mp4",".m3u8",".m3u"],
               },
             },
           ],
@@ -299,7 +287,7 @@
             src:this.video,
             type: type
           }
-          this.setup.sources[0] = source
+          this.setup.sources.push(source)
         this.fileReady = true
       },
       selectAction(e) {

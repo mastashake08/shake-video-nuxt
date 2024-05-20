@@ -17,13 +17,11 @@ import '@videojs/themes/dist/sea/index.css';
 import '@silvermine/videojs-chromecast/dist/silvermine-videojs-chromecast.css'
 import 'videojs-contrib-ads';
 import 'videojs-ima';
-
+import { Parser } from 'm3u8-parser';
 import 'videojs-contrib-ads/dist/videojs-contrib-ads.css'
 import 'videojs-ima/dist/videojs.ima.css'
 import { StoreFrames } from '@mastashake08/remote-video-recorder';
-import ima from 'videojs-ima/dist/videojs.ima';
-// Register Google IMA to videojs instance on the window
-// Can't call ima.init if the module is not exported by webpack (see webpack.mix.js)
+
 
   export default {
     name: 'VideoPlayer',
@@ -41,17 +39,25 @@ import ima from 'videojs-ima/dist/videojs.ima';
       }
     },
     created() {
-      console.log(ima)
-      if (typeof google !== 'undefined') {
-        videojs.registerPlugin(ima.name, ima.init);
-      }
+     
     },
     async mounted() {
-
+    
+    //Can't call ima.init if the module is not exported by webpack (see webpack.mix.js)
+      // Register Google IMA to videojs instance on the window
+      window.videojs = videojs
       this.player = videojs(this.$refs.videoPlayer, this.options, () => {
-        // this.player.ima({
-        //   adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/23146977599/shake-tv-1&description_url=https%3A%2F%2Fshaketv.jcompsolu.com&tfcd=0&npa=0&sz=640x480&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator='
-        // })
+        try {
+          if (typeof google !== 'undefined') {
+            videojs.registerPlugin(ima.name, ima.init);
+            this.player.ima({
+            adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/23146977599/shake-tv-1&description_url=https%3A%2F%2Fshaketv.jcompsolu.com&tfcd=0&npa=0&sz=640x480&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator='
+          })
+        }
+          
+        } catch (error) {
+          
+        }
         // this.player.playlist([
         //   {
         //   name: 'Rick and Morty',
@@ -91,7 +97,13 @@ import ima from 'videojs-ima/dist/videojs.ima';
         //     }
         //   }
         // ])
-        //this.player.playlistUi()
+        const parser = new Parser(this.options.src);
+        parser.end();
+
+        var parsedManifest = parser.manifest;
+        console.log(parsedManifest)
+        this.player.playlist([this.options.sources])
+        this.player.playlistUi()
       });
       
       
