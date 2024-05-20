@@ -1,14 +1,18 @@
 <template>
     <div>
-        <div id="express-checkout-element" class="text-center">
+        <div id="express-checkout-element" class="text-center my-2">
             <!-- A Stripe Element will be inserted here. -->
+            <p>
+            Support the project and get a playlist file with over 5000 free IPTV channels!
+            </p>
+            <button class="rounded-md bg-green-500 px-5 my-2 text-center" @click="buy">Click HERE!</button>
+    
         </div>
 
         <div id="error-message">
         <!-- Display error message to your customers here -->
         </div>
-      <button class="rounded-md bg-green-500 px-5 my-2" @click="buy">Support the project and get a playlist file with over 5000 free IPTV channels!</button>
-    </div>
+      </div>
   </template>
   
   <script setup lang="ts">
@@ -20,13 +24,13 @@
     const appearance = { /* appearance */ }
     const options = { /* options */
         buttonType: {
-            applePay: 'donate',
-            googlePay: 'donate',
+            applePay: 'buy',
+            googlePay: 'buy',
         }
      }
     const elements = stripe.value.elements({
     mode: 'payment',
-    amount: 100,
+    amount: 299,
     currency: 'usd',
     appearance,
     })
@@ -71,6 +75,7 @@
     });
 
 }
+buy()
   // Use the Stripe instance to interact with the stripe.js library
   // https://docs.stripe.com/js
   </script>
