@@ -108,18 +108,33 @@
   </template>
 </v-dialog>
 </template>
+
 <script>
   export default {
     data: () => ({
       setup: {
         width: '80%',
         fluid: true,
-        liveui: false,
+        liveui: true,
         nativeControlsForTouch: true,
         playbackRates: [0.5, 1, 1.5, 2],
         responsive: true,
         controls: true,
         autoplay: false,
+        enableSmoothSeeking: true,
+        sources:[
+          // {
+          //   src: 'https://adultswim-vodlive.cdn.turner.com/live/rick-and-morty/stream.m3u8',
+          //   type:'application/x-mpegURL'
+          // },
+          // {
+          //     src:' https://adultswim-vodlive.cdn.turner.com/live/aqua-teen/stream.m3u8',
+          //     type:'application/x-mpegURL'
+          //   },{
+          //   src: 'https://bloodydisgusting-ingest-roku-us.cinedigm.com/playlist.m3u8',
+          //   type: 'application/x-mpegURL'
+          // }
+        ],
         controlBar: {
           skipButtons: {
             backward: 10,
@@ -149,7 +164,7 @@
       ],
       video: '',
       file: null,
-      fileReady: true
+      fileReady: false
     }),
     created() {
       this.handleLaunch();
@@ -288,7 +303,7 @@
             src:this.video,
             type: type
           }
-          this.setup.sources.push(source)
+          this.setup.sources[0] = source
         this.fileReady = true
       },
       selectAction(e) {

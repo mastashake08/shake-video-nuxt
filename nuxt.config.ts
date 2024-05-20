@@ -43,7 +43,7 @@ export default defineNuxtConfig({
         {
             "action": "/",
             "accept": {
-                "video/*": [".avi", ".mov", ".webm", ".mp4"]
+                "video/*": [".avi", ".mov", ".webm", ".mp4",'.m3u','.m3u8']
             }
         }
     ]
