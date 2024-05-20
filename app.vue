@@ -120,7 +120,7 @@
         playbackRates: [0.5, 1, 1.5, 2],
         responsive: true,
         controls: true,
-        autoplay: false,
+        autoplay: true,
         enableSmoothSeeking: true,
         sources:[
           // {
@@ -292,13 +292,9 @@
           console.log(this.setup)
       },
       async openRemote() {
-        this.video = prompt('Enter URL');
+        this.video = await prompt('Enter URL');
         const res = await fetch(this.video)
         const type = await res.headers.get('content-type')
-        const buf = await res.arrayBuffer()
-        const blob = new Blob([buf])
-     
-        const src = URL.createObjectURL(blob)
         const source = {
             src:this.video,
             type: type
