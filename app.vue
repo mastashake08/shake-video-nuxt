@@ -54,6 +54,7 @@
           <v-container fluid> 
             
             <div class="player">
+              <Purchase />
               <VideoPlayer :options="setup" v-if="fileReady"/>
             </div>
             <div

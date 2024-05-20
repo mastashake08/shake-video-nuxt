@@ -78,16 +78,17 @@ export default defineNuxtConfig({
   stripe: {
     // Server
     server: {
-      key: process.env.STRIPE_KEY,
-      
-    // CLIENT
+      key: "sk_test_123",
+      options: {
+        // your api options override for stripe server side
+        // https://github.com/stripe/stripe-node?tab=readme-ov-file#configuration
+      },
+      // CLIENT
     },
     client: {
-      key: process.env.STRIPE_SECRET,
-      // your api options override for stripe client side
-      options: {
-
-      }
-    }
-  }
+      key: process.env.STRIPE_KEY,
+      // your api options override for stripe client side https://stripe.com/docs/js/initializing#init_stripe_js-options
+      options: {},
+    },
+  },
 })
